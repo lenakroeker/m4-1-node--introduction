@@ -59,21 +59,45 @@ express()
     console.log(req.query.text)
     const randomTime = Math.floor(Math.random() * 3000);
     const commonGreetings = [
-      "hi",
       "hello",
       "howdy",
       "hiya!"];
     const commonGoodbyes = [
       "bye",
       "goodbye",
-      "see ya!",
       "so long!"];
+
+    const jokes = [
+      "Most people are shocked when they find out how bad I am as an electrician.</br> Do you want to hear another joke?(y/n)",
+      "Moses had the first tablet that could connect to the cloud.</br> Do you want to hear another joke?(y/n)",
+      "Thanks for explaining the word “many” to me, it means a lot.</br> Do you want to hear another joke?(y/n)",
+      "I went to buy some camo pants but couldn’t find any.</br> Do you want to hear another joke?(y/n)",
+      "Don’t you hate it when someone answers their own questions? I do.</br> Do you want to hear another joke?(y/n)",
+      "The problem with kleptomaniacs is that they always take things literally.</br> Do you want to hear another joke?(y/n)",
+      "I was addicted to the hokey pokey, but then I turned myself around.</br> Do you want to hear another joke?(y/n)",
+      "A told my girlfriend she drew her eyebrows too high. She seemed surprised.</br> Do you want to hear another joke?(y/n)",
+      "The last thing I want to do is hurt you; but it’s still on the list.</br> Do you want to hear another joke?(y/n)"
+
+    ]
 
 
     const getBotMessage = (inputText) => {
       let botMsg = inputText;
       let containsHello = false;
       let containsGoodbye = false;
+      let hearJoke = false;
+
+      if (inputText.toLowerCase() === "something funny") {
+        hearJoke = true;
+      }
+
+      if (inputText.toLowerCase() === "n") {
+        containsGoodbye = true;
+      }
+
+      if (inputText.toLowerCase() === "y") {
+        botMsg = jokes[Math.floor(Math.random() * jokes.length)]
+      }
 
       commonGreetings.forEach((greeting) => {
         if (inputText.toLowerCase().includes(greeting)) {
@@ -91,6 +115,8 @@ express()
         botMsg = "Hello!";
       } else if (containsGoodbye) {
         botMsg = "Goodbye";
+      } else if (hearJoke) {
+        botMsg = "do you want to hear a joke?(y/n)";
       }
       return botMsg;
     }
